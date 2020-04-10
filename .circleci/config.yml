@@ -21,6 +21,7 @@ jobs:
           command: |
             mkdir test-output
             npm run unit-tests
+
   integration-tests:
     docker:
       - image: circleci/node:lts
@@ -35,6 +36,25 @@ jobs:
           command: |
             mkdir test-output
             npm run integration-tests
+
+  sast:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout 
+      - run:
+          name: install nodejsscan
+          command: |
+            sudo apt update
+            sudo apt install python3-pip
+            pip3 install nodejsscan
+      - run:
+          name: Run NodeJsScan
+          command: |
+            nodejsscan -d ./ -o sast-output.json
+      - store_artifacts:
+          path: sast-output.json
+
   pack:
     docker:
       - image: circleci/node:lts
@@ -50,6 +70,12 @@ workflows:
   build-and-packge:
     jobs:
       - ci-build
+      - integration-tests:
+          requires:
+          - ci-build
+      - sast:
+          requires:
+          - ci-build
       - pack:
           requires:
             - ci-build
