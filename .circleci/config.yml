@@ -49,9 +49,11 @@ jobs:
             sudo apt install python3-pip
             pip3 install nodejsscan
       - run:
-          name: run nodejsscan
+          name: Run NodeJsScan
           command: |
-            nodejsscan -d ./
+            nodejsscan -d ./ -o sast-output.json
+      - store_artifacts:
+          path: sast-output.json
 
   pack:
     docker:
