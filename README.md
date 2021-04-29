@@ -22,3 +22,5 @@ Tests are run using Jester, and integration tests use the supertest library to s
 `npm run integration-tests`
 
 Integration tests expects a mongodb instance running and available# w4tutorial
+
+![dark-designer-wallpaper](https://user-images.githubusercontent.com/62277365/116552820-cc8f3000-a93c-11eb-83bb-9d89756fcc7c.jpg)
